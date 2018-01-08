@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "electrum-client": "git+https://github.com/you21979/node-electrum-client.git",
     "react": "16.2.0",
     "react-native": "0.52.0"
   },
