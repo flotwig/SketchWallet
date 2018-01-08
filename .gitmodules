@@ -1,0 +1,3 @@
+[submodule "lib/brainwalletx"]
+	path = lib/brainwalletx
+	url = https://github.com/brainwalletX/brainwalletX.github.io.git
