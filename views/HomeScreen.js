@@ -9,8 +9,13 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button,
+  ActivityIndicator
 } from 'react-native';
+import WalletList from "./WalletList";
+import Navigator from "../Navigator";
+import Db from "../Db";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -19,19 +24,27 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component<{}> {
+export default class HomeScreen extends Component<{}> {
+  static navigationOptions = {
+    title: 'Home'
+  }
+
+  constructor(p) {
+    super(p);
+    this.state = {
+      dbConnected: false
+    }
+    Db.init().then(() => this.setState({ dbConnected: true }));
+  }
+
   render() {
+    if (!this.state.dbConnected) {
+      return (<ActivityIndicator />);
+    }
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js...
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <Button onPress={() => this.props.navigation.navigate('NewWalletScreen')} title="New Wallet" />
+        <WalletList />
       </View>
     );
   }
@@ -43,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 10
   },
   welcome: {
     fontSize: 20,
